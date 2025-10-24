@@ -1,0 +1,35 @@
+create table hw_sql.orders
+(
+    id           bigserial PRIMARY KEY,
+    date         varchar(50) default now(),
+    customer_id  bigint,
+    product_name text NOT NULL,
+    amount       int CHECK ( amount > 0 ),
+    FOREIGN KEY (customer_id) references hw_sql.customers (id) ON DELETE CASCADE
+);
+
+
+insert into hw_sql.orders (customer_id, product_name, amount)
+values (1, 'Tovar_1', 199),
+       (2, 'Jidkost', 159),
+       (3, 'Podshipnik', 169),
+       (4, 'Gadost', 119),
+       (5, 'Gadost', 119),
+       (6, 'Strange Thing', 172);
+
+create table hw_sql.customers
+(
+    id           bigserial PRIMARY KEY,
+    name         varchar(50) NOT NULL,
+    surname      varchar(70),
+    age          smallint CHECK ( age > 0 and age < 120),
+    phone_number varchar(20) NOT NULL
+);
+
+insert into hw_sql.customers (name, surname, age, phone_number)
+values ('Ivan', 'Ivanoff', 32, '+7(999)555-55-55'),
+       ('Konstabtin', 'Petroff', 21, '+7(988)888-88-88'),
+       ('Vasiliy', 'Smirnoff', 34, '+7(977)777-77-77'),
+       ('Galina', 'Galiulina', 33, '+7(900)012-34-56'),
+       ('Olga', 'Ivanova', 42, '+7(933)654-32-10'),
+       ('Ivan', 'Kubarev', 50, '+7(944)333-33-33');
